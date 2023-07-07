@@ -42,9 +42,6 @@ function loan_interest_calculator()
       a = x
       fa = fx
     end
-    if a > 0.5
-      break
-    end
     x = (a + b) / 2
     fx = f(x)
   end
