@@ -19,7 +19,7 @@ jobs:
       matrix:
         version:
           - '1.0'
-          - '1.9'
+          - '1'
           - 'nightly'
         os:
           - ubuntu-latest
@@ -38,6 +38,26 @@ jobs:
       - uses: codecov/codecov-action@v3
         with:
           files: lcov.info
+
+  lint:
+    name: Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone
+        uses: actions/checkout@v3
+      - name: Setup Julia
+        uses: julia-actions/setup-julia@v1
+        with:
+          version: '1'
+      - name: Use Julia cache
+        uses: julia-actions/cache@v1
+      - name: Install JuliaFormatter.jl
+        run: julia -e 'using Pkg; pkg"add JuliaFormatter"'
+      - name: Setup Python
+        uses: actions/setup-python@v4
+      - name: Run pre-commit
+        uses: pre-commit/action@v3.0.0
+
   docs:
     name: Documentation
     runs-on: ubuntu-latest
