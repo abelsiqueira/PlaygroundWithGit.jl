@@ -12,12 +12,19 @@ function loan_interest_calculator()
     if interest_rate == 0
       return monthly_payment - borrowed_amount / number_of_payments
     else
-       return monthly_payment - interest_rate * borrowed_amount / (1 - 1 / (1 + interest_rate)^number_of_payments)
+      return monthly_payment -
+             interest_rate * borrowed_amount /
+             (1 - 1 / (1 + interest_rate)^number_of_payments)
     end
   end
 
-  plot(i -> i * borrowed_amount / (1 - 1 / (1 + i)^number_of_payments), 0, 0.02, lab="predicted monthly payment")
-  plot!(i -> monthly_payment, 0, 0.02, lab="actual monthly payment")
+  plot(
+    i -> i * borrowed_amount / (1 - 1 / (1 + i)^number_of_payments),
+    0,
+    0.02;
+    lab = "predicted monthly payment",
+  )
+  plot!(i -> monthly_payment, 0, 0.02; lab = "actual monthly payment")
   png("viz")
 
   f(x) = target_function(x)
