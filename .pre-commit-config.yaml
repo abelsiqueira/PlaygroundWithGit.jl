@@ -10,7 +10,7 @@ repos:
         files: .JuliaFormatter.toml
         args: [--unique]
       - id: mixed-line-ending
-        fix: "lf"
+        args: ['--fix=lf']
       - id: no-commit-to-branch
       - id: pretty-format-json
         args: [--autofix]
