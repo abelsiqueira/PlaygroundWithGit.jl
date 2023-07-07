@@ -3,6 +3,11 @@ module PlaygroundWithGit
 using Plots
 export loan_interest_calculator
 
+"""
+    loan_interest_calculator()
+
+Computes the interest rate for the situation of borrowing $500000 and paying 360 installments of $2700 each.
+"""
 function loan_interest_calculator()
   borrowed_amount = 500_000.0
   number_of_payments = 360
