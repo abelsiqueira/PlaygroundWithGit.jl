@@ -3,6 +3,25 @@ module PlaygroundWithGit
 using Plots
 export loan_interest_calculator
 
+function find_zero(f, a, b)
+  fa, fb = f(a), f(b)
+  x = (a + b) / 2
+  fx = f(x)
+  while abs(fx) > 1e-6
+    if fa * fx < 0
+      b = x
+      fb = fx
+    else
+      a = x
+      fa = fx
+    end
+    x = (a + b) / 2
+    fx = f(x)
+  end
+
+  return x, fx
+end
+
 function loan_interest_calculator()
   borrowed_amount = 500_000.0
   number_of_payments = 360
@@ -31,20 +50,7 @@ function loan_interest_calculator()
 
   a = 0.0
   b = 1.0
-  fa, fb = f(a), f(b)
-  x = (a + b) / 2
-  fx = f(x)
-  while abs(fx) > 1e-6
-    if fa * fx < 0
-      b = x
-      fb = fx
-    else
-      a = x
-      fa = fx
-    end
-    x = (a + b) / 2
-    fx = f(x)
-  end
+  x, fx = find_zero(f, a, b)
 
   return x, fx
 end
