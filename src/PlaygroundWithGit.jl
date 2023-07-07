@@ -32,7 +32,7 @@ function loan_interest_calculator()
   a = 0.0
   b = 1.0
   fa, fb = f(a), f(b)
-  x = (a + b) / 2
+  x = (a * fb - b * fa) / (fb - fa)
   fx = f(x)
   while abs(fx) > 1e-6
     if fa * fx < 0
@@ -42,7 +42,7 @@ function loan_interest_calculator()
       a = x
       fa = fx
     end
-    x = (a + b) / 2
+    x = (a * fb - b * fa) / (fb - fa)
     fx = f(x)
   end
 
