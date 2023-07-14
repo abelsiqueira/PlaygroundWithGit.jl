@@ -45,10 +45,10 @@ function loan_interest_calculator()
     x = (a + b) / 2
     fx = f(x)
     if abs(x) < 1e-6 || b-a <1e-6
+      break
   end
 
   return x, fx
 end
 
-end
 end
