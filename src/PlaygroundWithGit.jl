@@ -31,10 +31,16 @@ function loan_interest_calculator()
 
   a = 0.0
   b = 1.0
+  num_iter = 0
   fa, fb = f(a), f(b)
   x = (a + b) / 2
   fx = f(x)
   while abs(fx) > 1e-6 || (b - a) > 1e-6
+    num_iter += 1
+    println(num_iter)
+    if num_iter > 20
+      break
+    end    
     if fa * fx < 0
       b = x
       fb = fx
