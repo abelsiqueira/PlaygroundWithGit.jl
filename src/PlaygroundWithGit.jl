@@ -43,7 +43,7 @@ function loan_interest_calculator(; verbose = false, atol = 1e-6, rtol = 1e-6)
   f(x) = target_function(x)
 
   lower = 0.0
-  upper = 1.0
+  upper = monthly_payment / loan_amount
   f_lower, f_upper = f(lower), f(upper)
   solution = (lower + upper) / 2
   f_solution = f(solution)
