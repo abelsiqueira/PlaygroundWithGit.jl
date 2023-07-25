@@ -45,7 +45,7 @@ function loan_interest_calculator()
       b = x
       fb = fx
     else
-      a = 
+      a = x
       fa = fx
     end
     x = (a + b) / 2
