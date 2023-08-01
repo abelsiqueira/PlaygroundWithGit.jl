@@ -3,6 +3,12 @@ module PlaygroundWithGit
 using Plots, Printf
 export loan_interest_calculator
 
+"""
+loan_interest_calculator()
+
+Uses loan_amount, number_of_payments, and monthly_payment and does zero-finding method to calculate interest_rate
+
+"""
 function loan_interest_calculator(; verbose = false, atol = 1e-6, rtol = 1e-6)
   loan_amount = 500_000.0
   number_of_payments = 360
