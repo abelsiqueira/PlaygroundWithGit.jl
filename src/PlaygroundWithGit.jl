@@ -39,7 +39,7 @@ function loan_interest_calculator()
     num_iter += 1
     if num_iter > 100
       break
-    end   
+    end
     if fa * fx < 0
       b = x
       fb = fx
