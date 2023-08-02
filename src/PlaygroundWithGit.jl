@@ -3,11 +3,7 @@ module PlaygroundWithGit
 using Plots
 export loan_interest_calculator
 
-function loan_interest_calculator()
-  borrowed_amount = 500_000.0
-  number_of_payments = 360
-  monthly_payment = 2700.0
-
+function loan_interest_calculator(borrowed_amount, number_of_payments, monthly_payment)
   function target_function(interest_rate)
     if interest_rate == 0
       return monthly_payment - borrowed_amount / number_of_payments
