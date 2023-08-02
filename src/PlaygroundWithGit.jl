@@ -1,9 +1,9 @@
 module PlaygroundWithGit
 
-using Plots
+using Plots, Printf
 export loan_interest_calculator
 
-function loan_interest_calculator()
+function loan_interest_calculator(; verbose = false)
   borrowed_amount = 500_000.0
   number_of_payments = 360
   monthly_payment = 2700.0
@@ -44,6 +44,9 @@ function loan_interest_calculator()
     end
     x = (a + b) / 2
     fx = f(x)
+    if verbose
+      @info @sprintf("| %+12.5e | %+12.5e | %+12.5e | %+12.5e |\n", a, b, fa, fb)
+    end
   end
 
   return x, fx
