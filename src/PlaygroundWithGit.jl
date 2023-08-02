@@ -18,6 +18,20 @@ function loan_interest_calculator(; verbose = false)
     end
   end
 
+  function print_header()
+    @info "┌──────────────┬──────────────┬──────────────┬──────────────┐"
+    @info "│ a            │ b            │ f(a)         │ f(b)         │"
+    @info "├──────────────┼──────────────┼──────────────┼──────────────┤"
+  end
+
+  function print_iteration(a, b, fa, fb)
+    @info @sprintf("| %+12.5e | %+12.5e | %+12.5e | %+12.5e |\n", a, b, fa, fb)
+  end
+
+  function print_footer()
+    @info "└──────────────┴──────────────┴──────────────┴──────────────┘"
+  end
+
   plot(
     i -> i * borrowed_amount / (1 - 1 / (1 + i)^number_of_payments),
     0,
@@ -34,6 +48,12 @@ function loan_interest_calculator(; verbose = false)
   fa, fb = f(a), f(b)
   x = (a + b) / 2
   fx = f(x)
+
+  if verbose
+    print_header()
+    print_iteration(a, b, fa, fb)
+  end
+
   while abs(fx) > 1e-6
     if fa * fx < 0
       b = x
@@ -45,8 +65,12 @@ function loan_interest_calculator(; verbose = false)
     x = (a + b) / 2
     fx = f(x)
     if verbose
-      @info @sprintf("| %+12.5e | %+12.5e | %+12.5e | %+12.5e |\n", a, b, fa, fb)
+      print_iteration(a, b, fa, fb)
     end
+  end
+
+  if verbose
+    print_footer()
   end
 
   return x, fx
