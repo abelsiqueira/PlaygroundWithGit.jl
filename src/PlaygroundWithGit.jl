@@ -54,7 +54,7 @@ function loan_interest_calculator(; verbose = false, atol = 1e-6, rtol = 1e-6)
     print_iteration(lower, upper, f_lower, f_upper)
   end
 
-  while abs(f_solution) > ϵ
+  while abs(f_solution) > ϵ || (upper - lower) > atol
     if f_lower * f_solution < 0
       upper = solution
       f_upper = f_solution
