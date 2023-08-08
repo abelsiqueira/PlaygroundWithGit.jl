@@ -13,6 +13,8 @@ git remote add upstream https://github.com/abelsiqueira/PlaygroundWithGit.jl
 
 ## Linting and formatting
 
+Install a plugin to use [EditorConfig](https://editorconfig.org).
+
 We use [https://pre-commit.com](https://pre-commit.com) to run the linter and formatter of many things.
 In particular, the Julia code is formatted using [JuliaFormatter.jl](https://github.com/domluna/JuliaFormatter.jl).
 
