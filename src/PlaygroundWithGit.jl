@@ -3,18 +3,17 @@ module PlaygroundWithGit
 using Plots, Printf
 export loan_interest_calculator
 
-function loan_interest_calculator(; verbose = false)
-  borrowed_amount = 500_000.0
+function loan_interest_calculator(; verbose = false, atol = 1e-6, rtol = 1e-6)
+  loan_amount = 500_000.0
   number_of_payments = 360
   monthly_payment = 2700.0
 
   function target_function(interest_rate)
     if interest_rate == 0
-      return monthly_payment - borrowed_amount / number_of_payments
+      return monthly_payment - loan_amount / number_of_payments
     else
       return monthly_payment -
-             interest_rate * borrowed_amount /
-             (1 - 1 / (1 + interest_rate)^number_of_payments)
+             interest_rate * loan_amount / (1 - 1 / (1 + interest_rate)^number_of_payments)
     end
   end
 
@@ -33,7 +32,7 @@ function loan_interest_calculator(; verbose = false)
   end
 
   plot(
-    i -> i * borrowed_amount / (1 - 1 / (1 + i)^number_of_payments),
+    i -> i * loan_amount / (1 - 1 / (1 + i)^number_of_payments),
     0,
     0.02;
     lab = "predicted monthly payment",
@@ -48,13 +47,14 @@ function loan_interest_calculator(; verbose = false)
   fa, fb = f(a), f(b)
   x = (a + b) / 2
   fx = f(x)
+  ϵ = max(abs(fa), abs(fb), abs(fx)) * rtol + atol
 
   if verbose
     print_header()
     print_iteration(a, b, fa, fb)
   end
 
-  while abs(fx) > 1e-6
+  while abs(fx) > ϵ
     if fa * fx < 0
       b = x
       fb = fx
