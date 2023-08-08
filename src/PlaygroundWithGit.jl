@@ -23,8 +23,8 @@ function loan_interest_calculator(; verbose = false, atol = 1e-6, rtol = 1e-6)
     @info "├──────────────┼──────────────┼──────────────┼──────────────┤"
   end
 
-  function print_iteration(a, b, fa, fb)
-    @info @sprintf("| %+12.5e | %+12.5e | %+12.5e | %+12.5e |\n", a, b, fa, fb)
+  function print_iteration(a, b, fa, f_upper)
+    @info @sprintf("| %+12.5e | %+12.5e | %+12.5e | %+12.5e |\n", a, b, fa, f_upper)
   end
 
   function print_footer()
@@ -42,30 +42,30 @@ function loan_interest_calculator(; verbose = false, atol = 1e-6, rtol = 1e-6)
 
   f(x) = target_function(x)
 
-  a = 0.0
-  b = 1.0
-  fa, fb = f(a), f(b)
-  x = (a + b) / 2
-  fx = f(x)
-  ϵ = max(abs(fa), abs(fb), abs(fx)) * rtol + atol
+  lower = 0.0
+  upper = 1.0
+  f_lower, f_upper = f(lower), f(upper)
+  solution = (lower + upper) / 2
+  f_solution = f(solution)
+  ϵ = max(abs(f_lower), abs(f_upper), abs(f_solution)) * rtol + atol
 
   if verbose
     print_header()
-    print_iteration(a, b, fa, fb)
+    print_iteration(lower, upper, f_lower, f_upper)
   end
 
-  while abs(fx) > ϵ
-    if fa * fx < 0
-      b = x
-      fb = fx
+  while abs(f_solution) > ϵ
+    if f_lower * f_solution < 0
+      upper = solution
+      f_upper = f_solution
     else
-      a = x
-      fa = fx
+      lower = solution
+      f_lower = f_solution
     end
-    x = (a + b) / 2
-    fx = f(x)
+    solution = (lower + upper) / 2
+    f_solution = f(solution)
     if verbose
-      print_iteration(a, b, fa, fb)
+      print_iteration(lower, upper, f_lower, f_upper)
     end
   end
 
@@ -73,7 +73,7 @@ function loan_interest_calculator(; verbose = false, atol = 1e-6, rtol = 1e-6)
     print_footer()
   end
 
-  return x, fx
+  return solution, f_solution
 end
 
 end
