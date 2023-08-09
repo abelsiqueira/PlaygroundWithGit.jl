@@ -48,6 +48,7 @@ function loan_interest_calculator(; verbose = false, atol = 1e-6, rtol = 1e-6)
   solution = (lower + upper) / 2
   f_solution = f(solution)
   ϵ = max(abs(f_lower), abs(f_upper), abs(f_solution)) * rtol + atol
+  num_iter = 0
 
   if verbose
     print_header()
@@ -55,6 +56,10 @@ function loan_interest_calculator(; verbose = false, atol = 1e-6, rtol = 1e-6)
   end
 
   while abs(f_solution) > ϵ || (upper - lower) > atol
+    num_iter += 1
+    if num_iter > 100
+      break
+    end
     if f_lower * f_solution < 0
       upper = solution
       f_upper = f_solution
