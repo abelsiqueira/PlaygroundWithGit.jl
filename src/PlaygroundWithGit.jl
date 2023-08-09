@@ -3,10 +3,16 @@ module PlaygroundWithGit
 using Plots, Printf
 export loan_interest_calculator
 
-function loan_interest_calculator(; verbose = false, atol = 1e-6, rtol = 1e-6)
+function loan_interest_calculator(;
+  verbose = false,
+  atol = 1e-6,
+  rtol = 1e-6,
+  max_time = 5.0,
+)
   loan_amount = 500_000.0
   number_of_payments = 360
   monthly_payment = 2700.0
+  start_time = time()
 
   function target_function(interest_rate)
     if interest_rate == 0
@@ -54,7 +60,10 @@ function loan_interest_calculator(; verbose = false, atol = 1e-6, rtol = 1e-6)
     print_iteration(lower, upper, f_lower, f_upper)
   end
 
-  while abs(f_solution) > ϵ
+  solved = abs(f_solution) < ϵ
+  Δt = time() - start_time
+  tired = Δt > max_time
+  while !(solved || tired)
     if f_lower * f_solution < 0
       upper = solution
       f_upper = f_solution
@@ -64,6 +73,9 @@ function loan_interest_calculator(; verbose = false, atol = 1e-6, rtol = 1e-6)
     end
     solution = (lower + upper) / 2
     f_solution = f(solution)
+    solved = abs(f_solution) < 1e-6
+    Δt = time() - start_time
+    tired = Δt > max_time
     if verbose
       print_iteration(lower, upper, f_lower, f_upper)
     end
