@@ -23,7 +23,7 @@ If you prefer to create a local environment with it, do the following:
 
 ```bash
 python -m venv env
-. env/bin/activate
+. env/bin/activate  # on windows this is: . env/Scripts/activate
 pip install --upgrade pip setuptools pre-commit
 ```
 
