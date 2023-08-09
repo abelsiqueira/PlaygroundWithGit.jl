@@ -43,6 +43,12 @@ Do it once now to make sure that everything works as expected.
 
 Now, you can only commit if all the pre-commit tests pass.
 
+**Note:** on subsequent occassions when you need to run pre-commit in a new shell, you will need to activate the Python virtual environment.
+```bash
+. env/bin/activate # on windows: . env/Scripts/activate
+pre-commit run -a
+```
+
 ## Contributing workflow
 
 - Always branch from `main`
