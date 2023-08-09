@@ -3,7 +3,14 @@ module PlaygroundWithGit
 using Plots, Printf
 export loan_interest_calculator
 
-function loan_interest_calculator(loan_amount, number_of_payments, monthly_payment; verbose = false, atol = 1e-6, rtol = 1e-6)
+function loan_interest_calculator(
+  loan_amount,
+  number_of_payments,
+  monthly_payment;
+  verbose = false,
+  atol = 1e-6,
+  rtol = 1e-6,
+)
   function target_function(interest_rate)
     if interest_rate == 0
       return monthly_payment - loan_amount / number_of_payments
