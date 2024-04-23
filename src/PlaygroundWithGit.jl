@@ -3,6 +3,11 @@ module PlaygroundWithGit
 using Plots, Printf
 export loan_interest_calculator
 
+"""
+    interest = loan_interest_calculator()
+
+Basic docstring for youtube video on Documenter.jl.
+"""
 function loan_interest_calculator(; verbose = false, atol = 1e-6, rtol = 1e-6)
   loan_amount = 500_000.0
   number_of_payments = 360
