@@ -7,6 +7,16 @@ DocMeta.setdocmeta!(
   recursive = true,
 )
 
+const page_rename = Dict("developer.md" => "Developer docs")
+
+function nice_name(file)
+  file = replace(file, r"^[0-9]*-" => "")
+  if haskey(page_rename, file)
+    return page_rename[file]
+  end
+  return splitext(file)[1] |> x -> replace(x, "-" => " ") |> titlecase
+end
+
 makedocs(;
   modules = [PlaygroundWithGit],
   doctest = true,
@@ -15,14 +25,16 @@ makedocs(;
   repo = "https://github.com/abelsiqueira/PlaygroundWithGit.jl/blob/{commit}{path}#{line}",
   sitename = "PlaygroundWithGit.jl",
   format = Documenter.HTML(;
-    prettyurls = get(ENV, "CI", "false") == "true",
+    prettyurls = true,
     canonical = "https://abelsiqueira.github.io/PlaygroundWithGit.jl",
   ),
   pages = [
-    "Home" => "index.md",
-    "Reference" => "reference.md",
-    "Tutorials" => "tutorials.md",
+    "Home" => "index.md"
+    [
+      nice_name(file) => file for file in readdir(joinpath(@__DIR__, "src")) if
+      file != "index.md" && splitext(file)[2] == ".md"
+    ]
   ],
 )
 
-deploydocs(; repo = "github.com/abelsiqueira/PlaygroundWithGit.jl", push_preview = false)
+deploydocs(; repo = "github.com/abelsiqueira/PlaygroundWithGit.jl", push_preview = true)

@@ -2,6 +2,7 @@ module PlaygroundWithGit
 
 using Plots, Printf
 export loan_interest_calculator
+export almost_sqrt
 
 """
     interest = loan_interest_calculator()
@@ -79,6 +80,31 @@ function loan_interest_calculator(; verbose = false, atol = 1e-6, rtol = 1e-6)
   end
 
   return solution, f_solution
+end
+
+"""
+    x = almost_sqrt(a)
+
+Computes the sqrt of a with some error.
+
+## Examples
+
+```jldoctest
+julia> using PlaygroundWithGit
+
+julia> round(almost_sqrt(2.0); digits = 2)
+1.41
+```
+"""
+function almost_sqrt(a)
+  if a < 0
+    throw(ArgumentError("almost_sqrt does not support negative numbers"))
+  end
+  x = 1.0
+  while abs(x^2 - a) > 1e-6
+    x = (x + a / x) / 2
+  end
+  return x
 end
 
 end
