@@ -14,10 +14,19 @@ using PlaygroundWithGit # hide
 loan_interest_calculator()
 ```
 
-```@example myexample1
-x = 1
+```@setup myexample1
+using PlaygroundWithGit
+
+data = (
+  x = rand(100),
+  y = rand(100),
+)
 ```
 
 ```@example myexample1
-x + 1
+x = 2.0
+```
+
+```@example myexample1
+almost_sqrt(2.0)
 ```
